@@ -65,6 +65,7 @@ Recommended strategy:
 
 ```text
 skill-migrator/
+├─ LICENSE
 ├─ SKILL.md
 ├─ README.md
 ├─ references/
@@ -158,6 +159,10 @@ python -m unittest discover -s tests -v
 - State and memory migration remains conservative by design
 - Some extended CloudCode notes remain because the codebase still supports part of that workflow
 
+### License
+
+This project is released under the MIT License. See `LICENSE`.
+
 ### One-Sentence Definition
 
 This is a migration-oriented skill that teaches OpenClaw how to convert Claude Code and Hermes skills into OpenClaw skills.
@@ -227,6 +232,7 @@ CloudCode 目前仍然保留为扩展支持，但不是这个 skill 的第一目
 
 ```text
 skill-migrator/
+├─ LICENSE
 ├─ SKILL.md
 ├─ README.md
 ├─ references/
@@ -319,6 +325,10 @@ python -m unittest discover -s tests -v
 - 自定义工具语义仍然可能需要手工 wrapper
 - 状态系统和 memory 系统的迁移仍然以"保守落地"为主
 - 文档里仍然保留了一些 CloudCode 扩展说明，因为代码确实支持一部分这类迁移
+
+### 许可证
+
+本项目采用 MIT License，详见 `LICENSE`。
 
 ### 一句话定义
 

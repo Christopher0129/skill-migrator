@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+
+analysis.json
+mapping.yaml
+compatibility_report.md
+*_test_report.json
+
+analysis/
+converted/
+migrated/
