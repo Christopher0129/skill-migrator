@@ -40,6 +40,26 @@ description: |
 - "分析这个 skill 能不能迁移到 OpenClaw"
 - "先分析，再分阶段迁移成 OpenClaw skill"
 
+## Quick Decision Tree
+
+```text
+收到迁移请求
+    ↓
+先运行 analyze_skill.py
+    ↓
+结果是否低风险且映射清晰？
+    ├─ 是 -> 直接使用 convert_skill.py
+    ↓ 否
+是否存在未知工具、复杂状态或多入口？
+    ├─ 是 -> 使用 migrate_skill.py --phased
+    ↓ 否
+继续直接转换
+    ↓
+运行 validate_skill.py --strict
+    ↓
+若仍有 warning / error -> 输出 partial 或 failed，并列出人工审查项
+```
+
 ## Workflow
 
 1. 先识别源系统。
@@ -87,6 +107,27 @@ python scripts/validate_skill.py \
    - 哪些工具或状态仍需人工处理
    - 当前结果是 `completed`、`partial` 还是 `failed`
 
+## Review Checkpoints
+
+### Checkpoint 1: After Analysis
+
+- 必须审查 `compatibility_report.md`、`mapping.yaml`、以及 analysis warnings
+- 必须确认入口文件选择是否合理
+- 必须判断应该直接转换，还是改走 phased migration
+
+### Checkpoint 2: After Conversion
+
+- 必须确认输出目录结构完整
+- Claude Code 必须确认 `references/original.md` 已保留
+- Hermes 必须确认脚本已复制到 `scripts/`
+- 有状态时必须确认 `state.yaml` 是否已经生成
+
+### Checkpoint 3: After Validation
+
+- 如果 `validate_skill.py --strict` 仍有 warning 或 error，不要宣称迁移完成
+- 结果必须落到 `completed`、`partial` 或 `failed`
+- 需要人工处理的项必须明确列出
+
 ## Source-Specific Rules
 
 ### Claude Code -> OpenClaw
@@ -127,6 +168,8 @@ get_memory: memory_get
 ```
 
 ## Boundary Conditions
+
+如需更细的诊断步骤、修复选择和场景说明，按需读取 `references/migration-playbook.md`。
 
 ### If Analysis Shows High Risk
 
@@ -176,6 +219,26 @@ Get-Content -Raw -Encoding UTF8 source_file
 - 简要说明已完成、部分完成、以及未完成的部分
 - 不要承诺当前仓库没有实现的备份、归档或自动回滚流程
 
+## Minimal Examples
+
+### Example 1: Claude Code, Low Risk
+
+- 用户请求：把一个带 `SLASH_COMMANDS` 的 Claude Code skill 转成 OpenClaw
+- 处理方式：先分析，再直接转换，最后严格验证
+- 预期结果：`SKILL.md` 保留 slash command 说明，`references/original.md` 存在
+
+### Example 2: Hermes, Declared Tools Only
+
+- 用户请求：迁移一个 `config.toml + Python` 的 Hermes skill
+- 处理方式：从 `config.toml` 取 name、description、declared tools，再复制实现脚本
+- 预期结果：只有声明过的 tools 被视为 tool，helper function 不会被误判
+
+### Example 3: CloudCode, Partial Result
+
+- 用户请求：迁移一个含未知工具的 CloudCode skill
+- 处理方式：优先使用 phased migration，保留 manual review 项
+- 预期结果：生成 `MIGRATION_REPORT.md`，最终状态可能是 `partial`
+
 ## Manual Review Triggers
 
 遇到以下情况时，不要直接宣称“迁移完成”，而是输出人工审查项：
@@ -200,8 +263,11 @@ Get-Content -Raw -Encoding UTF8 source_file
 ## References
 
 - 详细映射参考：`references/cross-system-mappings.md`
+- 详细诊断与场景参考：`references/migration-playbook.md`
 - 人类说明文档：`README.md`
 
 ## Remember
 
 迁移的目标不是形式上生成文件，而是让 OpenClaw 最终得到一份能继续使用、能继续修改、并且风险清楚可见的 skill。
+
+*v4.5 - 保持真实边界，补回决策树、检查点与最小示例。*

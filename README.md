@@ -45,6 +45,18 @@ Recommended strategy:
 - Complex case: prefer phased migration
 - High-risk case: preserve manual review points instead of pretending the migration is fully automatic
 
+### Improvement Note
+
+v4.5 - Keep boundaries honest, add back the decision tree, checkpoints, and minimal examples.
+
+### What Improved in v4.5
+
+- Restored a short decision tree in `SKILL.md`
+- Restored explicit review checkpoints
+- Restored minimal scenario examples
+- Moved detailed diagnostics and repair choices into `references/migration-playbook.md`
+- Kept unsupported promises out of the agent-facing workflow
+
 ### Current Support
 
 #### First-class support
@@ -70,6 +82,7 @@ skill-migrator/
 ├─ README.md
 ├─ references/
 │  └─ cross-system-mappings.md
+│  └─ migration-playbook.md
 ├─ scripts/
 │  ├─ analyze_skill.py
 │  ├─ convert_skill.py
@@ -125,6 +138,8 @@ python scripts/validate_skill.py \
   --skill ./converted/my-skill/ \
   --strict
 ```
+
+For detailed checkpoints, scenario examples, and high-risk troubleshooting, see `references/migration-playbook.md`.
 
 ### Design Principles
 
@@ -212,6 +227,18 @@ CloudCode 目前仍然保留为扩展支持，但不是这个 skill 的第一目
 - 复杂场景：优先走 phased migration
 - 高风险场景：保留人工审查点，不要伪装成"完全自动迁移成功"
 
+### 改进标注
+
+v4.5 - 保持真实边界，补回决策树、检查点与最小示例。
+
+### v4.5 改进点
+
+- 在 `SKILL.md` 中补回短决策树
+- 补回明确的审查检查点
+- 补回最小场景示例
+- 把更细的诊断步骤和修复选择下沉到 `references/migration-playbook.md`
+- 继续避免在 agent 文档里承诺当前实现并不存在的功能
+
 ### 当前支持范围
 
 #### 第一优先支持
@@ -237,6 +264,7 @@ skill-migrator/
 ├─ README.md
 ├─ references/
 │  └─ cross-system-mappings.md
+│  └─ migration-playbook.md
 ├─ scripts/
 │  ├─ analyze_skill.py
 │  ├─ convert_skill.py
@@ -292,6 +320,8 @@ python scripts/validate_skill.py \
   --skill ./converted/my-skill/ \
   --strict
 ```
+
+如需更细的检查点、场景示例和高风险问题处理，请查看 `references/migration-playbook.md`。
 
 ### 当前设计原则
 
