@@ -178,10 +178,6 @@ python -m unittest discover -s tests -v
 
 This project is released under the MIT License. See `LICENSE`.
 
-### One-Sentence Definition
-
-This is a migration-oriented skill that teaches OpenClaw how to convert Claude Code and Hermes skills into OpenClaw skills.
-
 [Back to language switch](#skill-migrator)
 
 ---
@@ -359,9 +355,5 @@ python -m unittest discover -s tests -v
 ### 许可证
 
 本项目采用 MIT License，详见 `LICENSE`。
-
-### 一句话定义
-
-这是一个让 OpenClaw 学会"把 Claude Code 和 Hermes 的 skill 转化为 OpenClaw skill"的迁移型 skill。
 
 [返回语言切换](#skill-migrator)
